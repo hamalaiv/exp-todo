@@ -1,0 +1,56 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="redux-mixin.html">
+<link rel="import" href="sortable-list.html">
+
+<dom-module id="todo-list">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+
+    <h1>TODOLIST</h1>
+    
+    <sortable-list id="sortable_list" sortable=".item" on-sort-finish="_onSortFinished">
+      <template is="dom-repeat" id="list-template" items="[[state.todos]]" as="todoItem">
+        <div class="item" html="{{todoItem}}">{{todoItem}}</div>
+      </template>
+    </sortable-list>
+  </template>
+
+  <script>
+    class TodoList extends ReduxMixin(Polymer.Element) {
+      static get is() { return 'todo-list'; }
+
+      static get properties() {
+        return {
+          state: {
+            type: String,
+            statePath(state) {
+              return state;
+            }
+          }
+        };
+      }
+
+      _test() {
+        console.log("_test");
+        this.dispatch("testAction");
+      }
+
+      _onSortFinished(){
+        let items = this.$.sortable_list.items;
+        let temp = [];
+        for(var i in items){
+          temp.push(items[i].textContent);
+        }
+        console.log(temp);
+        this.dispatch("setTodos", temp);
+      }
+    }
+
+    window.customElements.define(TodoList.is, TodoList);
+  </script>
+</dom-module>

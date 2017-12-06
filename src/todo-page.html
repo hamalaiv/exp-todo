@@ -1,0 +1,47 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="redux-mixin.html">
+<link rel="import" href="todo-list.html">
+
+<dom-module id="todo-page">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+
+    <app-localstorage-document key="todos" data="{{state.todos}}"></app-localstorage-document>
+    <input value="{{todoInput::input}}" type="text" placeholder="what I need to do..." on-keydown="_todoInputKeyDown">
+    <todo-list></todo-list>
+  </template>
+
+  <script>
+    class TodoPage extends ReduxMixin(Polymer.Element) {
+      static get is() { return 'todo-page'; }
+
+      static get properties() {
+        return {
+          todoInput: String,
+          state: {
+            type: String,
+            statePath(state) {
+              return state;
+            }
+          }
+        };
+      }
+
+      _todoInputKeyDown(e) {
+        if (e.keyCode === 13) { // enter
+          console.log(this.todoInput);
+          this.dispatch("addTodo", this.todoInput);
+          this.todoInput = "";
+        }
+      }
+    }
+
+    window.customElements.define(TodoPage.is, TodoPage);
+  </script>
+</dom-module>
