@@ -1,52 +1,68 @@
 <link rel="import" href="../bower_components/polymer-redux/polymer-redux.html">
 <script src="../node_modules/redux/dist/redux.js"></script>
 <script>
-  // Setup a Redux store
-  let todos = [];
-  if(window.localStorage){
-    todos = JSON.parse(window.localStorage.getItem("todos"));
-  }
-  const initial = {todos: todos};
-  const reducer = (state, action) => {
-    switch(action.type){
-      case 'ADD_TODO':
-        return {
-          ...state,
-          todos:[...state.todos, action.text]
-        };
-      case "SET_TODOS":
-        return {
-          ...state,
-          todos:action.todos
-        };
-      default:
-        return state || initial;
+    // Setup a Redux store
+    let todos = [];
+    if (window.localStorage) {
+        todos = JSON.parse(window.localStorage.getItem("todos"));
     }
-  }
-  const store = Redux.createStore(
-    reducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  );
+    const initial = { todos: todos };
+    const reducer = (state, action) => {
+        switch (action.type) {
+        case "EDIT_TODO":
+            return {
+                ...state,
+                todos:[...state.todos.slice(0, action.index), action.text, ...state.todos.slice(action.index + 1)]
+            };
+        case "ADD_TODO":
+            return {
+                ...state,
+                todos: [...state.todos, action.text]
+            };
+        case "REMOVE_TODO":
+            return {
+                ...state,
+                todos: [...state.todos.slice(0, action.index), ...state.todos.slice(action.index + 1)]
+            }
+        case "SET_TODOS":
+            return {
+                ...state,
+                todos: action.todos
+            };
+        default:
+            return state || initial;
+        }
+    }
+    const store = Redux.createStore(
+        reducer,
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    );
 
-  BaseReduxMixin = PolymerRedux(store);
+    BaseReduxMixin = PolymerRedux(store);
 
-  // Export the ReduxMixin
-  ReduxMixin = Parent => class ReduxMixin extends BaseReduxMixin(Parent) {
-    static get actions() {
-        return {
-            addTodo(text) {
-              return {
-                  type: 'ADD_TODO',
-                  text
-              }
-            },
-            setTodos(todos){
-              return {
-                type: "SET_TODOS",
-                todos
-              }
+    // Export the ReduxMixin
+    ReduxMixin = Parent => class ReduxMixin extends BaseReduxMixin(Parent) {
+        static get actions() {
+            return {
+                addTodo(text) {
+                    return {
+                        type: "ADD_TODO",
+                        text
+                    }
+                },
+                removeTodo(index){
+                    return {
+                        type: "REMOVE_TODO",
+                        index
+                    }
+                },
+                setTodos(todos) {
+                    return {
+                        type: "SET_TODOS",
+                        todos
+                    }
+                }
             }
         }
     }
-  }
 </script>

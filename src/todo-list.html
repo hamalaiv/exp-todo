@@ -2,6 +2,7 @@
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="redux-mixin.html">
 <link rel="import" href="sortable-list.html">
+<link rel="import" href="todo-item.html">
 
 <dom-module id="todo-list">
   <template>
@@ -15,7 +16,7 @@
     
     <sortable-list id="sortable_list" sortable=".item" on-sort-finish="_onSortFinished">
       <template is="dom-repeat" id="list-template" items="[[state.todos]]" as="todoItem">
-        <div class="item" html="{{todoItem}}">{{todoItem}}</div>
+        <todo-item class="item" model="[[todoItem]]" index="[[index]]"></todo-item>
       </template>
     </sortable-list>
   </template>
@@ -35,16 +36,11 @@
         };
       }
 
-      _test() {
-        console.log("_test");
-        this.dispatch("testAction");
-      }
-
       _onSortFinished(){
         let items = this.$.sortable_list.items;
         let temp = [];
         for(var i in items){
-          temp.push(items[i].textContent);
+          temp.push(items[i].model);
         }
         console.log(temp);
         this.dispatch("setTodos", temp);
