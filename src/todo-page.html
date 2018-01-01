@@ -13,6 +13,7 @@
     </style>
 
     <app-localstorage-document key="todos" data="{{state.todos}}"></app-localstorage-document>
+    <app-localstorage-document key="completed" data="{{state.completed}}"></app-localstorage-document>
     <input value="{{todoInput::input}}" type="text" placeholder="what I need to do..." on-keydown="_todoInputKeyDown">
     <todo-list></todo-list>
   </template>

@@ -3,10 +3,12 @@
 <script>
     // Setup a Redux store
     let todos = [];
+    let completed = [];
     if (window.localStorage) {
         todos = JSON.parse(window.localStorage.getItem("todos"));
+        completed = JSON.parse(window.localStorage.getItem("completed"));
     }
-    const initial = { todos: todos };
+    const initial = {todos: todos, completed: completed};
     const reducer = (state, action) => {
         switch (action.type) {
         case "EDIT_TODO":
@@ -22,13 +24,19 @@
         case "REMOVE_TODO":
             return {
                 ...state,
-                todos: [...state.todos.slice(0, action.index), ...state.todos.slice(action.index + 1)]
+                todos: _removeTodo(state.todos, action.index)
             }
         case "SET_TODOS":
             return {
                 ...state,
                 todos: action.todos
             };
+        case "COMPLETE_TODO":
+            return {
+                ...state,
+                todos:_removeTodo(state.todos, action.index),
+                completed:[action.todo, ...state.completed]
+            }
         default:
             return state || initial;
         }
@@ -68,8 +76,19 @@
                         type: "SET_TODOS",
                         todos
                     }
+                },
+                completeTodo(index, todo){
+                    return {
+                        type: "COMPLETE_TODO",
+                        index,
+                        todo
+                    }
                 }
             }
         }
+    }
+
+    function _removeTodo(todos, index){
+        return [...todos.slice(0, index), ...todos.slice(index + 1)];
     }
 </script>

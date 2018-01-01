@@ -15,6 +15,7 @@
 
         <div class="todo-item-container" editing$="[[isEditing]]">
             <div class="view">
+                <button on-click="_completeTodo">done</button>
                 <span on-dblclick="_startEditing">{{model}}</span>
                 <button on-click="_removeTodo">&times;</button>
             </div>
@@ -46,7 +47,6 @@
             }
 
             _startEditing() {
-                console.log("start editing");
                 this.$['text-input'].value = this.model;
                 this.isEditing = true;
                 this.$['text-input'].focus();
@@ -75,6 +75,10 @@
                 } else if (e.keyCode == 27) {
                     this.isEditing = false;
                 }
+            }
+
+            _completeTodo(){
+                this.dispatch("completeTodo", this.index, this.model);
             }
         }
 

@@ -10,6 +10,15 @@
       :host {
         display: block;
       }
+
+      sortable-list{
+        display:block;
+        margin-top:30px;
+      }
+
+      #sortable_list_completed .item{
+        text-decoration: line-through;
+      }
     </style>
 
     <h1>TODOLIST</h1>
@@ -19,6 +28,12 @@
         <todo-item class="item" model="[[todoItem]]" index="[[index]]"></todo-item>
       </template>
     </sortable-list>
+
+    <sortable-list id="sortable_list_completed" sortable=".item" on-sort-finish="_onCompletedSortFinished">
+        <template is="dom-repeat" id="list-template" items="[[state.completed]]" as="todoItem">
+          <div class="item">{{todoItem}}</div>
+        </template>
+      </sortable-list>
   </template>
 
   <script>
@@ -42,7 +57,6 @@
         for(var i in items){
           temp.push(items[i].model);
         }
-        console.log(temp);
         this.dispatch("setTodos", temp);
       }
     }
