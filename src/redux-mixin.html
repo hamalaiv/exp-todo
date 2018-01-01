@@ -56,6 +56,13 @@
                         index
                     }
                 },
+                editTodo(index, text){
+                    return {
+                        type: "EDIT_TODO",
+                        index,
+                        text
+                    }
+                },
                 setTodos(todos) {
                     return {
                         type: "SET_TODOS",

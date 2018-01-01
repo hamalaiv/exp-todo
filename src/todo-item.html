@@ -7,10 +7,19 @@
             :host {
                 display: block;
             }
+
+            .todo-item-container[editing] .view {
+                display: none;
+            }
         </style>
 
-        <span>{{model}}</span>
-        <button on-click="_removeTodo">&times;</button>
+        <div class="todo-item-container" editing$="[[isEditing]]">
+            <div class="view">
+                <span on-dblclick="_startEditing">{{model}}</span>
+                <button on-click="_removeTodo">&times;</button>
+            </div>
+            <input id="text-input" class="edit" hidden="[[!isEditing]]" on-blur="_onInputBlur" on-keydown="_onInputKeyDown">
+        </div>
     </template>
 
     <script>
@@ -24,12 +33,48 @@
                         statePath(state) {
                             return state;
                         }
+                    },
+                    isEditing: {
+                        type: Boolean,
+                        value: false
                     }
                 };
             }
 
-            _removeTodo(){
+            _removeTodo() {
                 this.dispatch("removeTodo", this.index);
+            }
+
+            _startEditing() {
+                console.log("start editing");
+                this.$['text-input'].value = this.model;
+                this.isEditing = true;
+                this.$['text-input'].focus();
+            }
+
+            _onInputBlur(e) {
+                if (this.isEditing) {
+                    this._confirmEdit();
+                }
+            }
+
+            _confirmEdit() {
+                let newText = this.$['text-input'].value;
+
+                this.isEditing = false;
+                if (!newText.trim()) {
+                    this._removeTodo();
+                }else{
+                    this.dispatch("editTodo", this.index, this.$['text-input'].value);
+                }
+            }
+
+            _onInputKeyDown(e) {
+                if (e.keyCode == 13) {
+                    this.$['text-input'].blur();
+                } else if (e.keyCode == 27) {
+                    this.isEditing = false;
+                }
             }
         }
 
