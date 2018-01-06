@@ -19,7 +19,7 @@
         case "ADD_TODO":
             return {
                 ...state,
-                todos: [...state.todos, action.text]
+                todos: [action.text, ...state.todos]
             };
         case "REMOVE_TODO":
             return {
