@@ -16,6 +16,11 @@
                 ...state,
                 todos:[...state.todos.slice(0, action.index), action.text, ...state.todos.slice(action.index + 1)]
             };
+        case "EDIT_COMPLETED":
+            return {
+                ...state,
+                completed:[...state.completed.slice(0, action.index), action.text, ...state.completed.slice(action.index + 1)]
+            };
         case "ADD_TODO":
             return {
                 ...state,
@@ -89,6 +94,13 @@
                 editTodo(index, text){
                     return {
                         type: "EDIT_TODO",
+                        index,
+                        text
+                    }
+                },
+                editCompleted(index, text){
+                    return {
+                        type: "EDIT_COMPLETED",
                         index,
                         text
                     }

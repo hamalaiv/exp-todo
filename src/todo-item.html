@@ -76,7 +76,7 @@
                 if (!newText.trim()) {
                     this._removeTodo();
                 }else{
-                    this.dispatch("editTodo", this.index, this.$['text-input'].value);
+                    this.dispatch(this.isCompleted ? "editCompleted" : "editTodo", this.index, this.$['text-input'].value);
                 }
             }
 
