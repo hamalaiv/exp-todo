@@ -41,6 +41,11 @@
                 ...state,
                 todos: action.todos
             };
+        case "SET_COMPLETED":
+            return {
+                ...state,
+                completed: action.todos
+            };
         case "COMPLETE_TODO":
             return {
                 ...state,
@@ -108,6 +113,12 @@
                 setTodos(todos) {
                     return {
                         type: "SET_TODOS",
+                        todos
+                    }
+                },
+                setCompleted(todos) {
+                    return {
+                        type: "SET_COMPLETED",
                         todos
                     }
                 },

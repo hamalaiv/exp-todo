@@ -62,6 +62,15 @@
                 this.dispatch("setTodos", temp);
             }
 
+            _onCompletedSortFinished() {
+                let items = this.$.sortable_list_completed.items;
+                let temp = [];
+                for (var i in items) {
+                    temp.push(items[i].model);
+                }
+                this.dispatch("setCompleted", temp);
+            }
+
             _clearCompleted(){
                 this.dispatch("clearCompleted");
             }
