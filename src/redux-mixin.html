@@ -26,6 +26,11 @@
                 ...state,
                 todos: _removeTodo(state.todos, action.index)
             }
+        case "REMOVE_COMPLETED":
+            return {
+                ...state,
+                completed: _removeTodo(state.completed, action.index)
+            }
         case "SET_TODOS":
             return {
                 ...state,
@@ -72,6 +77,12 @@
                 removeTodo(index){
                     return {
                         type: "REMOVE_TODO",
+                        index
+                    }
+                },
+                removeCompleted(index){
+                    return {
+                        type: "REMOVE_COMPLETED",
                         index
                     }
                 },

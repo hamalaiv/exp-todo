@@ -54,7 +54,7 @@
             }
 
             _removeTodo() {
-                this.dispatch("removeTodo", this.index);
+                this.dispatch(this.isCompleted ? "removeCompleted" : "removeTodo", this.index);
             }
 
             _startEditing() {
@@ -89,11 +89,7 @@
             }
 
             _completeTodo(){
-                if(this.isCompleted){
-                    this.dispatch("uncompleteTodo", this.index, this.model);
-                }else{
-                    this.dispatch("completeTodo", this.index, this.model);
-                }
+                this.dispatch(this.isCompleted ? "uncompleteTodo" : "completeTodo", this.index, this.model);
             }
         }
 
