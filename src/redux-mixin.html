@@ -4,11 +4,16 @@
     // Setup a Redux store
     let todos = [];
     let completed = [];
+    let exp = {
+        points:0,
+        level:1
+    };
     if (window.localStorage) {
         todos = JSON.parse(window.localStorage.getItem("todos"));
         completed = JSON.parse(window.localStorage.getItem("completed"));
+        exp = JSON.parse(window.localStorage.getItem("exp"));
     }
-    const initial = {todos: todos, completed: completed};
+    const initial = {todos: todos, completed: completed, exp: exp};
     const reducer = (state, action) => {
         switch (action.type) {
         case "EDIT_TODO":
@@ -49,6 +54,10 @@
         case "COMPLETE_TODO":
             return {
                 ...state,
+                exp:{
+                    ...state.exp,
+                    points:++state.exp.points
+                },
                 todos:_removeTodo(state.todos, action.index),
                 completed:[action.todo, ...state.completed]
             }

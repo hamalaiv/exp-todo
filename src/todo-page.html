@@ -14,6 +14,10 @@
 
     <app-localstorage-document key="todos" data="{{state.todos}}"></app-localstorage-document>
     <app-localstorage-document key="completed" data="{{state.completed}}"></app-localstorage-document>
+    <app-localstorage-document key="exp" data="{{state.exp}}"></app-localstorage-document>
+    <div>
+      <span>{{state.exp.points}}</span>
+    </div>
     <input value="{{todoInput::input}}" type="text" placeholder="what I need to do..." on-keydown="_todoInputKeyDown">
     <todo-list></todo-list>
   </template>
@@ -36,7 +40,6 @@
 
       _todoInputKeyDown(e) {
         if (e.keyCode === 13) { // enter
-          console.log(this.todoInput);
           this.dispatch("addTodo", this.todoInput);
           this.todoInput = "";
         }
