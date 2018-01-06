@@ -5,62 +5,68 @@
 <link rel="import" href="todo-item.html">
 
 <dom-module id="todo-list">
-  <template>
-    <style include="shared-styles">
-      :host {
-        display: block;
-      }
-
-      sortable-list{
-        display:block;
-        margin-top:30px;
-      }
-
-      #sortable_list_completed .item{
-        text-decoration: line-through;
-      }
-    </style>
-
-    <h1>TODOLIST</h1>
-    
-    <sortable-list id="sortable_list" sortable=".item" on-sort-finish="_onSortFinished">
-      <template is="dom-repeat" id="list-template" items="[[state.todos]]" as="todoItem">
-        <todo-item class="item" model="[[todoItem]]" index="[[index]]"></todo-item>
-      </template>
-    </sortable-list>
-
-    <sortable-list id="sortable_list_completed" sortable=".item" on-sort-finish="_onCompletedSortFinished">
-        <template is="dom-repeat" id="list-template" items="[[state.completed]]" as="todoItem">
-          <div class="item">{{todoItem}}</div>
-        </template>
-      </sortable-list>
-  </template>
-
-  <script>
-    class TodoList extends ReduxMixin(Polymer.Element) {
-      static get is() { return 'todo-list'; }
-
-      static get properties() {
-        return {
-          state: {
-            type: String,
-            statePath(state) {
-              return state;
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
             }
-          }
-        };
-      }
 
-      _onSortFinished(){
-        let items = this.$.sortable_list.items;
-        let temp = [];
-        for(var i in items){
-          temp.push(items[i].model);
+            sortable-list {
+                display: block;
+                margin-top: 30px;
+            }
+
+            #sortable_list_completed .item {
+                text-decoration: line-through;
+            }
+        </style>
+
+        <h1>TODOLIST</h1>
+
+        <sortable-list id="sortable_list" sortable=".item" on-sort-finish="_onSortFinished">
+            <template is="dom-repeat" id="list-template" items="[[state.todos]]" as="todoItem">
+                <todo-item class="item" model="[[todoItem]]" index="[[index]]"></todo-item>
+            </template>
+        </sortable-list>
+
+        <sortable-list id="sortable_list_completed" sortable=".item" on-sort-finish="_onCompletedSortFinished">
+            <template is="dom-repeat" id="list-template" items="[[state.completed]]" as="todoItem">
+                <div class="item">{{todoItem}}</div>
+            </template>
+        </sortable-list>
+
+        <button on-click="_clearCompleted">Clear completed</button>
+    </template>
+
+    <script>
+        class TodoList extends ReduxMixin(Polymer.Element) {
+            static get is() { return 'todo-list'; }
+
+            static get properties() {
+                return {
+                    state: {
+                        type: String,
+                        statePath(state) {
+                            return state;
+                        }
+                    }
+                };
+            }
+
+            _onSortFinished() {
+                let items = this.$.sortable_list.items;
+                let temp = [];
+                for (var i in items) {
+                    temp.push(items[i].model);
+                }
+                this.dispatch("setTodos", temp);
+            }
+
+            _clearCompleted(){
+                this.dispatch("clearCompleted");
+            }
         }
-        this.dispatch("setTodos", temp);
-      }
-    }
 
-    window.customElements.define(TodoList.is, TodoList);
-  </script>
+        window.customElements.define(TodoList.is, TodoList);
+    </script>
 </dom-module>

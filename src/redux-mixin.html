@@ -37,6 +37,11 @@
                 todos:_removeTodo(state.todos, action.index),
                 completed:[action.todo, ...state.completed]
             }
+        case "CLEAR_COMPLETED":
+            return{
+                ...state,
+                completed:[]
+            }
         default:
             return state || initial;
         }
@@ -82,6 +87,11 @@
                         type: "COMPLETE_TODO",
                         index,
                         todo
+                    }
+                },
+                clearCompleted(){
+                    return {
+                        type: "CLEAR_COMPLETED"
                     }
                 }
             }
