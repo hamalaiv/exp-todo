@@ -1,4 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="redux-mixin.html">
 <link rel="import" href="sortable-list.html">
@@ -11,31 +12,48 @@
                 display: block;
             }
 
+            h4{
+                margin-bottom:0px;
+            }
+
             sortable-list {
                 display: block;
-                margin-top: 30px;
+            }
+
+            .item{
+                background-color: #fff;
+                border-radius: 4px;
+                margin-top:4px;
+                margin-bottom:4px;
             }
 
             #sortable_list_completed .item {
+                background-color: #e2e4e6;
                 text-decoration: line-through;
+            }
+
+            .footer{
+                margin-top: 15px;
             }
         </style>
 
-        <h1>TODOLIST</h1>
-
+        <h4>Todo</h4>
         <sortable-list id="sortable_list" sortable=".item" on-sort-finish="_onSortFinished">
             <template is="dom-repeat" id="list-template" items="[[state.todos]]" as="todoItem">
                 <todo-item class="item" model="[[todoItem]]" index="[[index]]"></todo-item>
             </template>
         </sortable-list>
 
+        <h4>Completed</h4>
         <sortable-list id="sortable_list_completed" sortable=".item" on-sort-finish="_onCompletedSortFinished">
             <template is="dom-repeat" id="list-template" items="[[state.completed]]" as="todoItem">
                 <todo-item class="item" model="[[todoItem]]" index="[[index]]" is-completed="true"></todo-item>
             </template>
         </sortable-list>
 
-        <button on-click="_clearCompleted">Clear completed</button>
+        <div class="footer">
+            <paper-button on-click="_clearCompleted">Clear completed</paper-button>
+        </div>
     </template>
 
     <script>

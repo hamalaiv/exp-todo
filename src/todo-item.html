@@ -1,4 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="todo-item">
@@ -15,18 +17,24 @@
             .todo-item-container[completed] .view span{
                 text-decoration: line-through;
             }
+
+            .btn-remove{
+                float:right;
+            }
         </style>
 
         <div class="todo-item-container" editing$="[[isEditing]]" completed$="[[isCompleted]]">
             <div class="view">
-                <button on-click="_completeTodo">
-                    <template is="dom-if" if="[[!isCompleted]]">done</template>
-                    <template is="dom-if" if="[[isCompleted]]">undo</template>
-                </button>
+                <paper-button on-click="_completeTodo">
+                    <template is="dom-if" if="[[!isCompleted]]"><img src="images/ic_done_black_24dp_1x.png"></template>
+                    <template is="dom-if" if="[[isCompleted]]"><img src="images/ic_undo_black_24dp_1x.png"></template>
+                </paper-button>
                 <span on-dblclick="_startEditing">{{model}}</span>
-                <button on-click="_removeTodo">&times;</button>
+                <paper-button class="btn-remove" on-click="_removeTodo">
+                    <img src="images/ic_clear_black_24dp_1x.png">
+                </paper-button>
             </div>
-            <input id="text-input" class="edit" hidden="[[!isEditing]]" on-blur="_onInputBlur" on-keydown="_onInputKeyDown">
+            <paper-input id="text-input" class="edit" hidden="[[!isEditing]]" on-blur="_onInputBlur" on-keydown="_onInputKeyDown"></paper-input>
         </div>
     </template>
 

@@ -1,4 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="redux-mixin.html">
@@ -9,6 +11,8 @@
     <style include="shared-styles">
       :host {
         display: block;
+        max-width: 600px;
+        margin: 30px;
       }
     </style>
 
@@ -18,7 +22,7 @@
     <div>
       <span>{{state.exp.points}}</span>
     </div>
-    <input value="{{todoInput::input}}" type="text" placeholder="what I need to do..." on-keydown="_todoInputKeyDown">
+    <paper-input value="{{todoInput::input}}" type="text" placeholder="what I need to do..." on-keydown="_todoInputKeyDown"></paper-input>
     <todo-list></todo-list>
   </template>
 
