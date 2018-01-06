@@ -31,7 +31,7 @@
 
         <sortable-list id="sortable_list_completed" sortable=".item" on-sort-finish="_onCompletedSortFinished">
             <template is="dom-repeat" id="list-template" items="[[state.completed]]" as="todoItem">
-                <div class="item">{{todoItem}}</div>
+                <todo-item class="item" model="[[todoItem]]" index="[[index]]" is-completed="true"></todo-item>
             </template>
         </sortable-list>
 

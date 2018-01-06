@@ -11,11 +11,18 @@
             .todo-item-container[editing] .view {
                 display: none;
             }
+
+            .todo-item-container[completed] .view span{
+                text-decoration: line-through;
+            }
         </style>
 
-        <div class="todo-item-container" editing$="[[isEditing]]">
+        <div class="todo-item-container" editing$="[[isEditing]]" completed$="[[isCompleted]]">
             <div class="view">
-                <button on-click="_completeTodo">done</button>
+                <button on-click="_completeTodo">
+                    <template is="dom-if" if="[[!isCompleted]]">done</template>
+                    <template is="dom-if" if="[[isCompleted]]">undo</template>
+                </button>
                 <span on-dblclick="_startEditing">{{model}}</span>
                 <button on-click="_removeTodo">&times;</button>
             </div>
@@ -36,6 +43,10 @@
                         }
                     },
                     isEditing: {
+                        type: Boolean,
+                        value: false
+                    },
+                    isCompleted:{
                         type: Boolean,
                         value: false
                     }
@@ -78,7 +89,11 @@
             }
 
             _completeTodo(){
-                this.dispatch("completeTodo", this.index, this.model);
+                if(this.isCompleted){
+                    this.dispatch("uncompleteTodo", this.index, this.model);
+                }else{
+                    this.dispatch("completeTodo", this.index, this.model);
+                }
             }
         }
 

@@ -37,6 +37,12 @@
                 todos:_removeTodo(state.todos, action.index),
                 completed:[action.todo, ...state.completed]
             }
+        case "UNCOMPLETE_TODO":
+            return {
+                ...state,
+                todos:[action.todo, ...state.todos],
+                completed:_removeTodo(state.completed, action.index)
+            }
         case "CLEAR_COMPLETED":
             return{
                 ...state,
@@ -85,6 +91,13 @@
                 completeTodo(index, todo){
                     return {
                         type: "COMPLETE_TODO",
+                        index,
+                        todo
+                    }
+                },
+                uncompleteTodo(index, todo){
+                    return {
+                        type: "UNCOMPLETE_TODO",
                         index,
                         todo
                     }
