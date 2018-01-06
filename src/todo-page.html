@@ -1,6 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="redux-mixin.html">
@@ -14,14 +15,16 @@
         max-width: 600px;
         margin: 30px;
       }
+
+      paper-progress{
+        width:100%;
+      }
     </style>
 
     <app-localstorage-document key="todos" data="{{state.todos}}"></app-localstorage-document>
     <app-localstorage-document key="completed" data="{{state.completed}}"></app-localstorage-document>
     <app-localstorage-document key="exp" data="{{state.exp}}"></app-localstorage-document>
-    <div>
-      <span>{{state.exp.points}}</span>
-    </div>
+    <paper-progress value="[[state.exp.points]]" min="0" max="200"></paper-progress>
     <paper-input value="{{todoInput::input}}" type="text" placeholder="what I need to do..." on-keydown="_todoInputKeyDown"></paper-input>
     <todo-list></todo-list>
   </template>

@@ -18,7 +18,8 @@
     "polymer-redux": "^1.0.4",
     "app-storage": "PolymerElements/app-storage#^2.0.2",
     "paper-input": "PolymerElements/paper-input#^2.0.5",
-    "paper-button": "PolymerElements/paper-button#^2.0.0"
+    "paper-button": "PolymerElements/paper-button#^2.0.0",
+    "paper-progress": "PolymerElements/paper-progress#^2.0.1"
   },
   "resolutions": {
     "polymer": "^2.0.0"
