@@ -10,6 +10,22 @@
                 display: block;
             }
 
+            .todo-item-container .view{
+                display:flex;
+            }
+
+            .todo-item-container .view paper-button{
+                flex: 0 1 auto;
+                align-self: center;
+                min-width:50px;
+            }
+
+            .todo-item-container .view span{
+                flex: 1 1 100%;
+                align-self: center;
+                padding: 5px 0;
+            }
+
             .todo-item-container[editing] .view {
                 display: none;
             }
@@ -20,6 +36,11 @@
 
             .btn-remove{
                 float:right;
+            }
+
+            .btn-remove img{
+                width:16px;
+                height:16px;
             }
         </style>
 
