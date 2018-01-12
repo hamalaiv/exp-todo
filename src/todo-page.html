@@ -12,8 +12,29 @@
     <style include="shared-styles">
       :host {
         display: block;
-        max-width: 600px;
-        margin: 30px;
+        margin: 60px 15px;
+        max-width: 100%;
+      }
+
+      @media screen and (min-width:768px){
+        :host{
+          margin: 60px auto;
+          max-width:648px;
+        }
+      }
+
+      @media screen and (min-width:992px){
+        :host{
+          margin: 60px auto;
+          max-width:812px;
+        }
+      }
+      
+      @media screen and (min-width:1200px){
+        :host{
+          margin: 60px auto;
+          max-width:960px;
+        }
       }
 
       paper-progress{

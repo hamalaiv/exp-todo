@@ -12,6 +12,11 @@
                 display: block;
             }
 
+            hr{
+                border-color:rgba(0,0,0,0.05);
+                margin: 30px 0;
+            }
+
             h4{
                 margin-bottom:0px;
             }
@@ -43,6 +48,8 @@
                 <todo-item class="item" model="[[todoItem]]" index="[[index]]"></todo-item>
             </template>
         </sortable-list>
+
+        <hr>
 
         <h4>Completed</h4>
         <sortable-list id="sortable_list_completed" sortable=".item" on-sort-finish="_onCompletedSortFinished">
