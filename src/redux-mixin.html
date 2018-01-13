@@ -8,10 +8,10 @@
         points:0,
         level:1
     };
-    if (window.localStorage) {
-        todos = JSON.parse(window.localStorage.getItem("todos"));
-        completed = JSON.parse(window.localStorage.getItem("completed"));
-        exp = JSON.parse(window.localStorage.getItem("exp"));
+    if (typeof(Storage) !== "undefined") {
+        todos = _tryGetLocalStorageItem("todos") || todos;
+        completed = _tryGetLocalStorageItem("completed") || completed;
+        exp = _tryGetLocalStorageItem("exp") || exp;
     }
     const initial = {todos: todos, completed: completed, exp: exp};
     const reducer = (state, action) => {
@@ -156,5 +156,17 @@
 
     function _removeTodo(todos, index){
         return [...todos.slice(0, index), ...todos.slice(index + 1)];
+    }
+
+    function _tryGetLocalStorageItem(key){
+        let json = localStorage.getItem(key);
+        if(json){
+            try{
+                return JSON.parse(json);
+            }catch(e){
+                console.log(e);
+            }
+        }
+        return false;
     }
 </script>
