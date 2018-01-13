@@ -37,15 +37,37 @@
         }
       }
 
-      paper-progress{
+      .level-container{
+        display:flex;
+      }
+
+      .level-container .progress-container{
+        position: relative;
+        flex: 1 1 100%;
+      }
+
+      .level-container .progress-container paper-progress{
         width:100%;
+      }
+
+      .level-container .progress-container .points{
+        position: absolute;
+        left:0;
+        right:0;
       }
     </style>
 
     <app-localstorage-document key="todos" data="{{state.todos}}"></app-localstorage-document>
     <app-localstorage-document key="completed" data="{{state.completed}}"></app-localstorage-document>
     <app-localstorage-document key="exp" data="{{state.exp}}"></app-localstorage-document>
-    <paper-progress value="[[state.exp.points]]" min="0" max="200"></paper-progress>
+    <div class="level-container">
+      <span>Lvl [[state.exp.level]]</span>
+      <div class="progress-container">
+        <paper-progress value="[[state.exp.points]]" min="0" max="[[state.exp.requiredPoints]]"></paper-progress>
+        <span class="points">[[state.exp.points]]/[[state.exp.requiredPoints]]</span>
+      </div>
+      <span>Lvl [[_nextLevel(state.exp.level)]]</span>
+    </div>
     <paper-input value="{{todoInput::input}}" type="text" placeholder="what I need to do..." on-keydown="_todoInputKeyDown"></paper-input>
     <todo-list></todo-list>
   </template>
@@ -71,6 +93,10 @@
           this.dispatch("addTodo", this.todoInput);
           this.todoInput = "";
         }
+      }
+
+      _nextLevel(level){
+        return level+1;
       }
     }
 

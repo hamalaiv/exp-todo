@@ -6,7 +6,8 @@
     let completed = [];
     let exp = {
         points:0,
-        level:1
+        level:1,
+        requiredPoints: 10
     };
     if (typeof(Storage) !== "undefined") {
         todos = _tryGetLocalStorageItem("todos") || todos;
@@ -54,10 +55,7 @@
         case "COMPLETE_TODO":
             return {
                 ...state,
-                exp:{
-                    ...state.exp,
-                    points:++state.exp.points
-                },
+                exp: _addExp(state.exp),
                 todos:_removeTodo(state.todos, action.index),
                 completed:[action.todo, ...state.completed]
             }
@@ -168,5 +166,21 @@
             }
         }
         return false;
+    }
+
+    function _addExp(exp){
+        if(exp.points+1 >= exp.requiredPoints){
+            // level up
+            return {
+                points: 0,
+                level: exp.level+1,
+                requiredPoints: exp.requiredPoints + 10
+            };
+        }else{
+            return {
+                ...exp,
+                points: exp.points+1
+            }
+        }
     }
 </script>
