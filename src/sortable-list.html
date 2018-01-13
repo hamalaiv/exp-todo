@@ -218,6 +218,13 @@
         this._target.classList.remove('item--pressed');
         this._setDragging(false);
         this._translate3d(rect.left, rect.top, 1, this._target);
+
+        // prevent flickering by delaying setting 
+        // height and width back to auto size
+        setTimeout(() => {
+          this.style.height = 'auto';
+          this.style.width = 'auto';
+        }, 200);
       }
 
       _onTransitionEnd() {
