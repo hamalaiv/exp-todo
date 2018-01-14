@@ -39,6 +39,9 @@
 
       .level-container{
         display:flex;
+        height: 50px;
+        align-items: center;
+        margin-bottom: 20px;
       }
 
       .level-container .progress-container{
@@ -53,7 +56,18 @@
       .level-container .progress-container .points{
         position: absolute;
         left:0;
-        right:0;
+        top:-25px;
+        width:50px;
+        transform:translateX(-25px);
+        font-size: 14px;
+      }
+
+      .level-container .level{
+        flex: 1 1 60px;
+      }
+
+      .level-container .level:last-child{
+        text-align: right;
       }
     </style>
 
@@ -61,12 +75,12 @@
     <app-localstorage-document key="completed" data="{{state.completed}}"></app-localstorage-document>
     <app-localstorage-document key="exp" data="{{state.exp}}"></app-localstorage-document>
     <div class="level-container">
-      <span>Lvl [[state.exp.level]]</span>
+      <span class="level">Lvl [[state.exp.level]]</span>
       <div class="progress-container">
         <paper-progress value="[[state.exp.points]]" min="0" max="[[state.exp.requiredPoints]]"></paper-progress>
-        <span class="points">[[state.exp.points]]/[[state.exp.requiredPoints]]</span>
+        <span id="points" class="points">[[_setPoints(state.exp.points, state.exp.requiredPoints)]]</span>
       </div>
-      <span>Lvl [[_nextLevel(state.exp.level)]]</span>
+      <span class="level">Lvl [[_nextLevel(state.exp.level)]]</span>
     </div>
     <paper-input value="{{todoInput::input}}" type="text" placeholder="what I need to do..." on-keydown="_todoInputKeyDown"></paper-input>
     <todo-list></todo-list>
@@ -97,6 +111,11 @@
 
       _nextLevel(level){
         return level+1;
+      }
+
+      _setPoints(points, requiredPoints){
+        this.$.points.style.left = (100 * points / requiredPoints) + "%";
+        return points + "/" + requiredPoints;
       }
     }
 
